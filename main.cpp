@@ -15,7 +15,7 @@
 using namespace std;
 
 int main(int argc,char *argv[]){
-	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ User ================\n");
+	colorizedPrint(foreColor::fGreen, backColor::bNone,"================= User =================\n");
 	passwd *userDatabase = getpwuid(getuid());
 	cout << "User name: " << userDatabase->pw_name << endl;
 	cout << "User directory: " << userDatabase->pw_dir << endl;
@@ -106,6 +106,7 @@ int main(int argc,char *argv[]){
 
 
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ System ================\n");
+	
 	utsname sysInfo;
 	uname(&sysInfo);
 
