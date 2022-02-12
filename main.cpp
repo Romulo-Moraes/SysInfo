@@ -24,13 +24,13 @@ int main(int argc,char *argv[]){
 	cout << endl;
 
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ Hardware ================\n");
+
 	fstream memoryDatabase;
 	memoryDatabase.open("/proc/meminfo", ios::in);
 
 	string lineFromFile;
 
 	pair<string,string> keyAndValueFromInfo;
-
 	string key;
 	string value;
 
@@ -55,7 +55,6 @@ int main(int argc,char *argv[]){
 	cout << endl;
 
 	fstream cpuDatabase;
-
 	cpuDatabase.open("/proc/cpuinfo", ios::in);
 
 	if(cpuDatabase.is_open()){
@@ -98,7 +97,7 @@ int main(int argc,char *argv[]){
 		cout << "MHz average: " << getMHzAverage(MHzOfEachProcessor);
 	}
 	else{
-		colorizedPrint(foreColor::fGreen, backColor::bNone,"Error in open cpu database. Skip\n \n");
+		colorizedPrint(foreColor::fRed, backColor::bNone,"Error in open cpu database. Skip\n \n");
 	}
 
 	cpuDatabase.close();
