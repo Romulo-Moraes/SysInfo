@@ -100,7 +100,9 @@ int main(int argc, char *argv[])
 			while (getline(memoryDatabase, lineFromFile))
 			{
 				keyAndValueFromInfo = getKeyAndValue(lineFromFile);
-				if (keyAndValueFromInfo.first == "MemTotal" || keyAndValueFromInfo.first == "MemAvailable" || keyAndValueFromInfo.first == "MemFree")
+				key = keyAndValueFromInfo.first;
+				value = keyAndValueFromInfo.second;
+				if (key == "MemTotal" || key == "MemAvailable" || key == "MemFree" || key == "Active" || key == "Percpu" || key == "SwapTotal" || key == "SwapFree" || key == "SwapCached" || key == "Buffers" || key == "Cached" || key == "KernelStack")
 				{
 					keyAndValueFromInfo.second = removeAllNotNumbers(removeAllSpaces(keyAndValueFromInfo.second));
 					valueToConvert = convertStringToNumber(keyAndValueFromInfo.second);
