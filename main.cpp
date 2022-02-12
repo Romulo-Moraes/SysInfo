@@ -106,14 +106,13 @@ int main(int argc,char *argv[]){
 
 
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ System ================\n");
-	
+
 	utsname sysInfo;
 	uname(&sysInfo);
 
 	cout << "Distro: " << sysInfo.release << endl;
 	cout << "OS kernel: " << sysInfo.sysname << endl;
 	cout << "Archtecture: " << sysInfo.machine << endl;
-
 
 	return 0;
 }
