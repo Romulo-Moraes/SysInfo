@@ -6,7 +6,11 @@
 using namespace std;
 
 
-long convertStringToNumber(string text){
+double convertKbToGb(int number){
+    return (number / 1024);
+}
+
+double convertStringToNumber(string text){
     return atof(text.c_str());
 };
 

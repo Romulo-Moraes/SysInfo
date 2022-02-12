@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "helpers/programInteraction.hpp"
 #include "libs/colorizedPrint.hpp"
+#include <utility>
 
 using namespace std;
 
@@ -12,10 +13,9 @@ int main(int argc,char *argv[]){
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ User ================\n");
 	passwd *userDatabase = getpwuid(getuid());
 	cout << "User name: " << userDatabase->pw_name << endl;
-	cout << "User directory" << userDatabase->pw_dir << endl;
+	cout << "User directory: " << userDatabase->pw_dir << endl;
 	cout << "User default shell: " << userDatabase->pw_shell << endl;
 
-	cout << endl;
 
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ Hardware ================\n");
 	fstream memoryDatabase;
@@ -23,14 +23,25 @@ int main(int argc,char *argv[]){
 
 	string lineFromFile;
 
+	pair<string,string> keyAndValueFromInfo;
+
 	if(memoryDatabase.is_open()){
-		while(getline(cin,lineFromFile)){
-			getKeyAndValue(lineFromFile);
+		int valueToConvert = 0;
+		while(getline(memoryDatabase,lineFromFile)){
+			keyAndValueFromInfo = getKeyAndValue(lineFromFile);
+			if(keyAndValueFromInfo.first == "MemTotal" || keyAndValueFromInfo.first == "MemAvailable" || keyAndValueFromInfo.first == "MemFree"){
+				keyAndValueFromInfo.second = removeAllNotNumbers(removeAllSpaces(keyAndValueFromInfo.second));
+				valueToConvert = convertStringToNumber(keyAndValueFromInfo.second);
+				valueToConvert = convertKbToGb(valueToConvert);
+				cout << keyAndValueFromInfo.first << ": " << valueToConvert << " GB" << endl;
+			}
 		}	
 	}
 	else{
 		colorizedPrint(foreColor::fGreen, backColor::bNone,"Error in open memory database. Skip\n \n");
 	}
+
+	memoryDatabase.close();
 
 	return 0;
 }
