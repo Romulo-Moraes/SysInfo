@@ -43,3 +43,13 @@ pair<string,string> getKeyAndValue(string text){
 
     return make_pair(key,value);
 }
+
+double getMHzAverage(vector<pair<int,string>> values){
+    double storeMHzAsNumber = 0;
+    size_t sizeOfValues = values.size();
+    for(auto processorMHz : values){
+        storeMHzAsNumber += convertStringToNumber(removeAllNotNumbers(removeAllSpaces(processorMHz.second)));
+    }
+
+    return (storeMHzAsNumber / sizeOfValues);
+}
