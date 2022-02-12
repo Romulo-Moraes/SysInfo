@@ -6,6 +6,7 @@
 #include "helpers/programInteraction.hpp"
 #include "libs/colorizedPrint.hpp"
 #include <utility>
+#include <sys/utsname.h>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int main(int argc,char *argv[]){
 	cout << "User directory: " << userDatabase->pw_dir << endl;
 	cout << "User default shell: " << userDatabase->pw_shell << endl;
 
+	cout << endl;
 
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ Hardware ================\n");
 	fstream memoryDatabase;
@@ -96,6 +98,18 @@ int main(int argc,char *argv[]){
 	}
 
 	cpuDatabase.close();
+
+	cout << endl << endl;
+
+
+	colorizedPrint(foreColor::fGreen, backColor::bNone,"================ System ================\n");
+	utsname sysInfo;
+	uname(&sysInfo);
+
+	cout << "Distro: " << sysInfo.release << endl;
+	cout << "OS kernel: " << sysInfo.sysname << endl;
+	cout << "Archtecture: " << sysInfo.machine << endl;
+
 
 	return 0;
 }
