@@ -1,9 +1,19 @@
-
-using namespace std
-
-
-double convertKbToGb(int number){
+string convertMhzToGhz(int number){
+    return to_string((number / 1024));
+}
+double convertKbToMb(int number){
     return (number / 1024);
+}
+
+string insertValueCommas(string text){
+    int textSize = text.length() - 3;
+    while(textSize > 0){
+        text.insert(textSize,",");
+        textSize -= 3;
+        break;
+    }
+
+    return text;
 }
 
 double convertStringToNumber(string text){

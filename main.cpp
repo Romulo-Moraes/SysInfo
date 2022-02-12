@@ -7,12 +7,16 @@
 #include <utility>
 #include <sys/utsname.h>
 #include <vector>
+#include <filesystem>
 #include <cctype>
+
+using namespace std;
+namespace fs = std::filesystem;
 
 #include "helpers/programInteraction.hpp"
 
 
-using namespace std;
+
 
 int main(int argc,char *argv[]){
 	colorizedPrint(foreColor::fGreen, backColor::bNone,"================= User =================\n");
@@ -41,8 +45,8 @@ int main(int argc,char *argv[]){
 			if(keyAndValueFromInfo.first == "MemTotal" || keyAndValueFromInfo.first == "MemAvailable" || keyAndValueFromInfo.first == "MemFree"){
 				keyAndValueFromInfo.second = removeAllNotNumbers(removeAllSpaces(keyAndValueFromInfo.second));
 				valueToConvert = convertStringToNumber(keyAndValueFromInfo.second);
-				valueToConvert = convertKbToGb(valueToConvert);
-				cout << keyAndValueFromInfo.first << ": " << valueToConvert << " GB" << endl;
+				valueToConvert = convertKbToMb(valueToConvert);
+				cout << keyAndValueFromInfo.first << ": " << valueToConvert << " MB" << endl;
 			}
 		}	
 	}
@@ -69,10 +73,7 @@ int main(int argc,char *argv[]){
 			keyAndValueFromInfo.first = removeAllSpaces(keyAndValueFromInfo.first);
 			key = keyAndValueFromInfo.first;
 			value = keyAndValueFromInfo.second;
-			if(key == "cpucores" || key == "cpuMHz" || key == "processor" || key == "modelname" || key == "cachesize"){
-				if(key == "cpuMHz"){
-					MHzOfEachProcessor.push_back(make_pair(numberOfProcessors,value));
-				}
+			if(key == "cpucores" || key == "processor" || key == "modelname" || key == "cachesize"){
 				if(key == "processor"){
 					numberOfProcessors += 1;
 				}
@@ -89,12 +90,37 @@ int main(int argc,char *argv[]){
 
 		}
 
+		string beginPartOfPath = "/sys/devices/system/cpu/cpu";
+		string endPartOfPath = "/cpufreq/scaling_cur_freq";
+		string completePath = "";
+		string frequencyOfProcessor = "";
+		for(int i = 0; i < numberOfProcessors;i++){
+			completePath = beginPartOfPath;
+			completePath += to_string(i);
+			completePath += endPartOfPath;
+
+			fstream freqFile;
+			freqFile.open(completePath,ios::in);
+
+			if(freqFile.is_open()){
+				getline(freqFile,frequencyOfProcessor);
+				MHzOfEachProcessor.push_back(make_pair(i,frequencyOfProcessor));
+			}
+			else{
+				cout << "cant open file";
+			}
+
+		}
+
 		// Print all got informations
 		cout << "Cpu cores: " << cpuCores << endl;
 		cout << "Number of threads: " << numberOfProcessors << endl;
 		cout << "Cpu model name: " << modelName << endl;
 		cout << "Cache size: " << cacheSize << endl;
-		cout << "MHz average: " << getMHzAverage(MHzOfEachProcessor);
+		cout << "Processors frequency: " << endl;
+		for(auto cpuFrequency : MHzOfEachProcessor){
+			cout << "       " << cpuFrequency.first << ": " << insertValueCommas(convertMhzToGhz(convertStringToNumber(cpuFrequency.second)))  << " GHz"<< endl;
+		}
 	}
 	else{
 		colorizedPrint(foreColor::fRed, backColor::bNone,"Error in open cpu database. Skip\n \n");
