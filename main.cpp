@@ -3,10 +3,14 @@
 #include <fstream>
 #include <pwd.h>
 #include <unistd.h>
-#include "helpers/programInteraction.hpp"
 #include "libs/colorizedPrint.hpp"
 #include <utility>
 #include <sys/utsname.h>
+#include <vector>
+#include <cctype>
+
+#include "helpers/programInteraction.hpp"
+
 
 using namespace std;
 
