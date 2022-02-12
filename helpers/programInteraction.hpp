@@ -6,10 +6,14 @@
 using namespace std;
 
 
+long convertStringToNumber(string text){
+    return atof(text.c_str());
+};
+
 string removeAllNotNumbers(string text){
     string newText = "";
     for(int i = 0;i < text.length();i++){
-        if(isdigit(text[i])){
+        if(isdigit(text[i]) || text[i] == '.'){
             newText += text[i];
         }
     }
@@ -31,4 +35,7 @@ string removeAllSpaces(string text){
 pair<string,string> getKeyAndValue(string text){
     size_t divisor = text.find(":");
     string key = text.substr(0,divisor);
+    string value = text.substr(divisor + 1);
+
+    return make_pair(key,value);
 }

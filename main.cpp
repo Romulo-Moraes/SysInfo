@@ -3,6 +3,7 @@
 #include <fstream>
 #include <pwd.h>
 #include <unistd.h>
+#include "helpers/programInteraction.hpp"
 #include "libs/colorizedPrint.hpp"
 
 using namespace std;
@@ -24,8 +25,8 @@ int main(int argc,char *argv[]){
 
 	if(memoryDatabase.is_open()){
 		while(getline(cin,lineFromFile)){
-			lineFromFile.
-		}
+			getKeyAndValue(lineFromFile);
+		}	
 	}
 	else{
 		colorizedPrint(foreColor::fGreen, backColor::bNone,"Error in open memory database. Skip\n \n");
