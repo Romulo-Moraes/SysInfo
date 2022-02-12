@@ -75,12 +75,14 @@ int main(int argc, char *argv[])
 	{
 		colorizedPrint(foreColor::fGreen, backColor::bNone, "================= User =================\n");
 		passwd *userDatabase = getpwuid(getuid());
-		cout << "User name: ";
-		colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {userDatabase->pw_name});
-		cout << "User directory: ";
-		colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {userDatabase->pw_dir});
-		cout << "User default shell: ";
-		colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {userDatabase->pw_shell});
+		colorizedPrint(foreColor::fNone, backColor::bNone, "User name: ");
+		cout << userDatabase->pw_name << endl;
+		
+		colorizedPrint(foreColor::fNone, backColor::bNone, "User directory: ");
+		cout << userDatabase->pw_dir << endl;
+		
+		colorizedPrint(foreColor::fNone, backColor::bNone, "User default shell: ");
+		cout << userDatabase->pw_shell << endl;
 
 		cout << endl;
 	}
@@ -107,8 +109,9 @@ int main(int argc, char *argv[])
 					keyAndValueFromInfo.second = removeAllNotNumbers(removeAllSpaces(keyAndValueFromInfo.second));
 					valueToConvert = convertStringToNumber(keyAndValueFromInfo.second);
 					valueToConvert = convertKbToMb(valueToConvert);
-					cout << keyAndValueFromInfo.first << ": ";
-					colorizedPrint(foreColor::fNone, backColor::bNone, "%s MB\n", {to_string(valueToConvert)});
+					colorizedPrint(foreColor::fNone, backColor::bNone, "%s: ", {keyAndValueFromInfo.first});
+					cout << valueToConvert << " MB" << endl;
+					
 				}
 			}
 		}
@@ -187,19 +190,23 @@ int main(int argc, char *argv[])
 			}
 
 			// Print all got informations
-			cout << "Cpu cores: ";
-			colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {cpuCores});
-			cout << "Number of threads: ";
-			colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {to_string(numberOfProcessors)});
-			cout << "Cpu model name: ";
-			colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {modelName});
-			cout << "Cache size: ";
-			colorizedPrint(foreColor::fNone, backColor::bNone, "%s\n", {cacheSize});
-			cout << "Processors frequency: " << endl;
+			colorizedPrint(foreColor::fNone, backColor::bNone, "Cpu cores: ");
+			cout << cpuCores << endl;
+			
+			colorizedPrint(foreColor::fNone, backColor::bNone, "Number of threads: ");
+			cout << numberOfProcessors << endl;
+			
+			colorizedPrint(foreColor::fNone, backColor::bNone, "Cpu model name: ");
+			cout << modelName << endl;
+			
+			colorizedPrint(foreColor::fNone, backColor::bNone, "Cache size: ");
+			cout << cacheSize << endl;
+			
+			colorizedPrint(foreColor::fNone,backColor::bNone,"Processors frequency: \n");
 			for (auto cpuFrequency : MHzOfEachProcessor)
 			{
-				cout << "       " << cpuFrequency.first << ": ";
-				colorizedPrint(foreColor::fNone, backColor::bNone, "%s GHz\n", {insertValueCommas(convertMhzToGhz(convertStringToNumber(cpuFrequency.second)))});
+				colorizedPrint(foreColor::fNone, backColor::bNone,"       %s: ", {to_string(cpuFrequency.first)});
+				cout << insertValueCommas(convertMhzToGhz(convertStringToNumber(cpuFrequency.second))) << " GHz" << endl;				
 			}
 		}
 		else
@@ -220,9 +227,12 @@ int main(int argc, char *argv[])
 		utsname sysInfo;
 		uname(&sysInfo);
 
-		cout << "Distro: " << sysInfo.release << endl;
-		cout << "OS kernel: " << sysInfo.sysname << endl;
-		cout << "Archtecture: " << sysInfo.machine << endl;
+		colorizedPrint(foreColor::fNone,backColor::bNone,"Distro: ");
+		cout << sysInfo.release << endl;
+		colorizedPrint(foreColor::fNone,backColor::bNone,"OS kernel: ");
+		cout << sysInfo.sysname << endl;
+		colorizedPrint(foreColor::fNone,backColor::bNone,"Archtecture: ");
+		cout << sysInfo.machine << endl;
 	}
 
 	return 0;
