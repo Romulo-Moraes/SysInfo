@@ -47,7 +47,7 @@ int main(int argc,char *argv[]){
 		}	
 	}
 	else{
-		colorizedPrint(foreColor::fGreen, backColor::bNone,"Error in open memory database. Skip\n \n");
+		colorizedPrint(foreColor::fRed, backColor::bNone,"Error in open memory database. Skip\n \n");
 	}
 
 	memoryDatabase.close();
