@@ -1,5 +1,6 @@
 <div align="center">
     <h1>SysInfo</h1>
+    <img width="450px" src="./assets/search.png"/>
     <h3>A tool to fetch all informations about user, hardware and OS </h3>
 </div>
 
