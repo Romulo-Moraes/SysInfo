@@ -19,4 +19,8 @@ The program has 4 sections available, but sometimes only one of them is that we 
     -r | --ram : display informations about the RAM
     -o | -os : display informations about the Operational system
 
-## Updates coming soon...
+## How to compile
+The program is really simple and just make some syscalls to fetch information nothing more, then to compile is:
+```txt
+g++ sysinfo.cpp -o sysinfo
+``` 
